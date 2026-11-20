@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "composite": false,
+    "declaration": false,
+    "types": ["office-js"],
+    "paths": {
+      "@yangi-alifbo/core": ["../../packages/core/src/index.ts"],
+      "@yangi-alifbo/office-xml": ["../../packages/office/src/xml.ts"]
+    }
+  },
+  "include": ["src"]
+}

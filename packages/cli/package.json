@@ -1,0 +1,13 @@
+{
+  "name": "yangi-alifbo",
+  "version": "0.1.0",
+  "description": "Fayl va papkalarni yangi o'zbek alifbosiga o'girish (CLI)",
+  "type": "module",
+  "bin": { "yangi-alifbo": "./dist/cli.js" },
+  "files": ["dist"],
+  "scripts": {
+    "build": "esbuild src/cli.ts --bundle --platform=node --format=esm --target=node18 --outfile=dist/cli.js --banner:js='#!/usr/bin/env node' --alias:@yangi-alifbo/core=../core/src/index.ts --alias:@yangi-alifbo/office=../office/src/index.ts"
+  },
+  "dependencies": { "@yangi-alifbo/core": "0.1.0", "@yangi-alifbo/office": "0.1.0" },
+  "license": "MIT"
+}

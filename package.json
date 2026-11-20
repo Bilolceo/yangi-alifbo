@@ -1,0 +1,22 @@
+{
+  "name": "yangi-alifbo",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Eski o'zbek yozuvini 2026-yilgi yangi lotin alifbosiga o'girish tizimi",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w packages/core -w packages/office -w packages/cli",
+    "test": "vitest run",
+    "typecheck": "tsc -b packages/core packages/office packages/cli"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.1"
+  }
+}

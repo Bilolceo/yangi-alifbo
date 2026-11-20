@@ -1,0 +1,12 @@
+{
+  "name": "@yangi-alifbo/core",
+  "version": "0.1.0",
+  "description": "O'zbek matnini 2026-yilgi yangi lotin alifbosiga o'girish yadrosi (eski lotin, kirill)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"],
+  "scripts": { "build": "tsc -p tsconfig.json" },
+  "license": "MIT"
+}

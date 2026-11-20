@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yangi alifbo</title>
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <link rel="stylesheet" href="taskpane.css">
+</head>
+<body>
+  <header>
+    <div class="logo" aria-hidden="true">Ö</div>
+    <div>
+      <h1>Yangi alifbo</h1>
+      <p class="sub">OʻRQ-1184 · 28 harf + tutuq</p>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" class="tab active" data-tab="doc" aria-selected="true">Hujjat</button>
+    <button role="tab" class="tab" data-tab="text" aria-selected="false">Matn</button>
+    <button role="tab" class="tab" data-tab="settings" aria-selected="false">Sozlamalar</button>
+  </nav>
+
+  <main>
+    <section id="tab-doc" class="panel">
+      <div id="no-office" class="note" hidden>
+        Word topilmadi. Bu sahifa Word ichida ochilganda hujjat bilan işlaydi. «Matn» bölimidan foydalaning.
+      </div>
+      <button id="btn-doc" class="primary">Hujjatni öğiriş</button>
+      <button id="btn-sel" class="secondary">Belgilanganni öğiriş</button>
+      <button id="btn-check" class="ghost">Tekşiriş (özgartirmasdan)</button>
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+      <div id="warnings" class="warnings" hidden>
+        <h2>Tekşirib çiqing</h2>
+        <p class="hint">Bu sözlar özgartirilmadi yoki istisno sifatida öğirildi. Bosing — hujjatda belgilanadi.</p>
+        <ul id="warn-list"></ul>
+      </div>
+      <p class="hint small">Maslahat: muhim hujjatni öğirişdan oldin nusxasini saqlang. Ctrl+Z bilan qaytariş mumkin.</p>
+    </section>
+
+    <section id="tab-text" class="panel" hidden>
+      <label for="in">Eski lotin yoki kirill</label>
+      <textarea id="in" rows="7" placeholder="Oʻzbekiston Respublikasi... yoki Ўзбекистон..."></textarea>
+      <label for="out">Yangi alifbo</label>
+      <textarea id="out" rows="7" readonly></textarea>
+      <div class="row">
+        <button id="btn-copy" class="secondary">Nusxalaş</button>
+        <button id="btn-insert" class="secondary">Hujjatga qöyiş</button>
+      </div>
+    </section>
+
+    <section id="tab-settings" class="panel" hidden>
+      <label for="opt-from">Manba yozuvi</label>
+      <select id="opt-from">
+        <option value="auto">Avtomatik (eski lotin + kirill)</option>
+        <option value="latin">Faqat eski lotin</option>
+        <option value="cyrillic">Faqat kirill</option>
+      </select>
+
+      <fieldset>
+        <legend>Rejim</legend>
+        <label class="radio"><input type="radio" name="mode" value="ooxml"> Formatlaşni töliq saqlaş (tavsiya)</label>
+        <label class="radio"><input type="radio" name="mode" value="text"> Tuzatişlar rejimi (Track Changes bilan mos)</label>
+      </fieldset>
+
+      <label class="check"><input type="checkbox" id="opt-foreign"> Çet sözlarni himoyalaş (Washington, Microsoft…)</label>
+      <label class="check"><input type="checkbox" id="opt-headers"> Kolontitullarni ham öğiriş</label>
+
+      <label for="opt-protected">Öğirilmaydigan sözlar (har biri yangi qatorda)</label>
+      <textarea id="opt-protected" rows="4" placeholder="Shohruh&#10;Chilonzor City"></textarea>
+      <p id="saved" class="hint small" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script src="taskpane.js"></script>
+</body>
+</html>

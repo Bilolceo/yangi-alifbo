@@ -1,0 +1,1 @@
+{ "extends": "../../tsconfig.base.json", "compilerOptions": { "outDir": "dist", "rootDir": "../..", "noEmit": true, "composite": false, "types": ["node"], "paths": { "@yangi-alifbo/core": ["../core/src/index.ts"], "@yangi-alifbo/office": ["../office/src/index.ts"] } }, "include": ["src"] }
