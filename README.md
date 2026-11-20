@@ -1,5 +1,10 @@
 # Yangi alifbo
 
+[![CI](https://github.com/Bilolceo/yangi-alifbo/actions/workflows/ci.yml/badge.svg)](https://github.com/Bilolceo/yangi-alifbo/actions/workflows/ci.yml)
+[![Pages](https://github.com/Bilolceo/yangi-alifbo/actions/workflows/pages.yml/badge.svg)](https://bilolceo.github.io/yangi-alifbo/)
+
+**🌐 Veb-ilova: https://bilolceo.github.io/yangi-alifbo/** · Word manifest: https://bilolceo.github.io/yangi-alifbo/addin/manifest.xml
+
 Eski oʻzbek lotin (1995) va kirill yozuvidagi matn va hujjatlarni **2026-yilgi yangi lotin alifbosiga**
 (OʻRQ-1184, kuchga kirishi 22.04.2027) avtomatik oʻgirish tizimi.
 
