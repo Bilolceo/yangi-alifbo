@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yangi alifbo — matn va hujjatlarni öğiriş</title>
+  <meta name="description" content="Eski lotin va kirill yozuvidagi matn va Word, Excel, PowerPoint fayllarni 2026-yilgi yangi özbek alifbosiga öğiriş. Fayllar kompyuteringizdan çiqmaydi.">
+  <link rel="icon" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-in">
+      <a class="brand" href="#">
+        <span class="logo" aria-hidden="true">Ö</span>
+        <span>
+          <strong>Yangi alifbo</strong>
+          <small>OʻRQ-1184 · 28 harf + tutuq belgisi</small>
+        </span>
+      </a>
+      <nav class="tabs" role="tablist" aria-label="Bölimlar">
+        <button class="tab" role="tab" data-tab="text" aria-selected="true">Matn</button>
+        <button class="tab" role="tab" data-tab="files" aria-selected="false">Fayllar</button>
+        <button class="tab" role="tab" data-tab="alphabet" aria-selected="false">Alifbo</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- MATN -->
+    <section id="tab-text" class="panel" role="tabpanel">
+      <div class="toolbar">
+        <div class="seg" role="radiogroup" aria-label="Yönaliş">
+          <button class="seg-btn active" data-dir="forward" role="radio" aria-checked="true">Eski → Yangi</button>
+          <button class="seg-btn" data-dir="reverse" role="radio" aria-checked="false">Yangi → Eski</button>
+        </div>
+        <span class="spacer"></span>
+        <button id="btn-sample" class="btn ghost">Namuna</button>
+        <button id="btn-clear" class="btn ghost">Tozalaş</button>
+      </div>
+
+      <div class="editors">
+        <div class="editor">
+          <label for="in" id="in-label">Eski lotin yoki kirill</label>
+          <textarea id="in" spellcheck="false" placeholder="Matnni şu yerga yozing yoki qöying…&#10;&#10;Masalan: Oʻzbekiston Respublikasi, Toshkent shahri yoki Ўзбекистон Республикаси"></textarea>
+        </div>
+        <div class="editor">
+          <div class="editor-head">
+            <label for="out" id="out-label">Yangi alifbo</label>
+            <button id="btn-copy" class="btn small">Nusxalaş</button>
+          </div>
+          <textarea id="out" readonly spellcheck="false" placeholder="Natija şu yerda paydo böladi"></textarea>
+        </div>
+      </div>
+
+      <div id="text-report" class="report" aria-live="polite"></div>
+    </section>
+
+    <!-- FAYLLAR -->
+    <section id="tab-files" class="panel" role="tabpanel" hidden>
+      <label id="drop" class="drop" for="file-input">
+        <input id="file-input" type="file" multiple
+               accept=".docx,.xlsx,.pptx,.txt,.md,.csv,.tsv,.json,.html,.htm,.xml,.srt">
+        <span class="drop-icon" aria-hidden="true">⇪</span>
+        <strong>Fayllarni şu yerga tortib keling yoki tanlang</strong>
+        <span class="muted">Word (.docx), Excel (.xlsx), PowerPoint (.pptx), .txt, .csv, .md, .html, .srt</span>
+      </label>
+      <p class="privacy">🔒 Fayllar internetga yuborilmaydi — hammasi şu brauzerning özida bajariladi.
+        Formatlaş, jadvallar, rasmlar va formulalar özgarmaydi.</p>
+
+      <div id="file-actions" class="toolbar" hidden>
+        <strong id="file-summary"></strong>
+        <span class="spacer"></span>
+        <button id="btn-zip" class="btn primary">Hammasini yuklab oliş (.zip)</button>
+        <button id="btn-reset" class="btn ghost">Tozalaş</button>
+      </div>
+      <ul id="file-list" class="files"></ul>
+    </section>
+
+    <!-- ALIFBO -->
+    <section id="tab-alphabet" class="panel" role="tabpanel" hidden>
+      <h2>Yangi özbek alifbosi</h2>
+      <p class="muted">2026-yil 21-oktabrdagi OʻRQ-1184-son Qonun bilan tasdiqlangan.
+        Kuçga kiriş sanasi: <strong>2027-yil 22-aprel</strong>.</p>
+      <div id="letters" class="letters"></div>
+
+      <h2>Nima özgardi</h2>
+      <table class="changes">
+        <thead><tr><th>Eski</th><th>Yangi</th><th>Misol</th></tr></thead>
+        <tbody>
+          <tr><td>Oʻ oʻ</td><td><b>Ö ö</b></td><td>oʻzbek → özbek</td></tr>
+          <tr><td>Gʻ gʻ</td><td><b>Ğ ğ</b></td><td>bogʻ → boğ</td></tr>
+          <tr><td>Sh sh</td><td><b>Ş ş</b></td><td>shahar → şahar</td></tr>
+          <tr><td>Ch ch</td><td><b>Ç ç</b></td><td>choy → çoy</td></tr>
+          <tr><td>Ng ng</td><td>özgarmaydi</td><td>tong, ming</td></tr>
+          <tr><td>ʼ tutuq</td><td>saqlanadi</td><td>maʼno, şeʼr</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Klaviaturada qanday yoziladi</h2>
+      <ul class="tips">
+        <li><b>Windows / macOS:</b> «Turkish Q» klaviatura sxemasini qöşing — Ö Ğ Ş Ç alohida tugmalarda.</li>
+        <li><b>macOS:</b> <kbd>o</kbd> tugmasini bosib turing → ö; <kbd>s</kbd> → ş; <kbd>c</kbd> → ç; <kbd>g</kbd> → ğ.</li>
+        <li><b>Telefon:</b> harfni bosib turing — variantlar çiqadi.</li>
+      </ul>
+
+      <h2>Muhim</h2>
+      <ul class="tips">
+        <li>Eski alifboda berilgan hujjatlar (pasport, guvohnoma, pul, qimmatli qoğozlar) kuçini saqlaydi.</li>
+        <li>Lavhalar va belgilar yaroqsiz holga kelguniça yoki belgilangan muddatgaça işlatilişi mumkin.</li>
+        <li>Imlo qoidalari Vazirlar Mahkamasi dasturi bilan aniqlaştiriladi — dastur yangilanib boriladi.</li>
+      </ul>
+    </section>
+
+    <details class="settings" id="settings">
+      <summary>Sozlamalar</summary>
+      <div class="settings-grid">
+        <label>Manba yozuvi
+          <select id="opt-from">
+            <option value="auto">Avtomatik (eski lotin + kirill)</option>
+            <option value="latin">Faqat eski lotin</option>
+            <option value="cyrillic">Faqat kirill</option>
+          </select>
+        </label>
+        <label class="check"><input type="checkbox" id="opt-foreign" checked> Çet sözlarni himoyalaş (Washington, Microsoft…)</label>
+        <label class="check"><input type="checkbox" id="opt-tutuq" checked> Tutuq belgisini ʼ ga keltiriş</label>
+        <label class="wide">Öğirilmaydigan sözlar (vergul yoki yangi qator bilan)
+          <textarea id="opt-protected" rows="2" placeholder="Shohruh, Chilonzor City"></textarea>
+        </label>
+      </div>
+    </details>
+  </main>
+
+  <footer class="wrap foot">
+    <span>Oçiq kod · MIT</span>
+    <span>Natijani muhim hujjatlarda tekşirib çiqing.</span>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+services:
+  yangi-alifbo:
+    build: .
+    image: yangi-alifbo:0.1.0
+    ports:
+      - "8080:8080"
+    environment:
+      # Vergul bilan bir nechta kalit. Boʻsh qoldirilsa — autentifikatsiyasiz (faqat ichki tarmoq!)
+      API_KEYS: "${API_KEYS:-}"
+      MAX_BODY_MB: "25"
+      CORS_ORIGIN: ""
+    restart: unless-stopped
+    read_only: true

@@ -1,7 +1,7 @@
 import { OKINA, isCyrillic, isLetter, isUpper } from "./chars.js";
-import { buildPieces, type ConvertOptions, type ConvertWarning, type Piece } from "./engine.js";
+import { buildPieces, type ConvertOptions, type ConvertStats, type ConvertWarning, type Piece } from "./engine.js";
 
-export type { ConvertOptions, ConvertWarning, Piece, WarningReason } from "./engine.js";
+export type { ConvertOptions, ConvertStats, ConvertWarning, Piece, WarningReason } from "./engine.js";
 export { APOSTROPHES, TUTUQ, OKINA } from "./chars.js";
 export { EXCEPTIONS, PROTECTED_WORDS } from "./data.js";
 export { buildPieces } from "./engine.js";
@@ -14,7 +14,7 @@ export const ALPHABET = [
 
 export interface ConvertReport {
   text: string;
-  /** Oʻzgargan soʻzlar soni (taxminiy: oʻzgargan boʻlaklar soni). */
+  /** Oʻzgargan soʻzlar soni. */
   changes: number;
   warnings: ConvertWarning[];
 }
@@ -27,8 +27,9 @@ export function convert(text: string, options?: ConvertOptions): string {
 /** `convert` + hisobot (ogohlantirishlar, oʻzgarishlar soni). */
 export function convertWithReport(text: string, options?: ConvertOptions): ConvertReport {
   const warnings: ConvertWarning[] = [];
-  const pieces = buildPieces(text, options, warnings);
-  return { text: join(pieces), changes: pieces.filter((p) => !p.same).length, warnings };
+  const stats: ConvertStats = { words: 0 };
+  const pieces = buildPieces(text, options, warnings, stats);
+  return { text: join(pieces), changes: stats.words, warnings };
 }
 
 function join(pieces: Piece[]): string {
@@ -46,9 +47,10 @@ export function convertSegments(
   segments: readonly string[],
   options?: ConvertOptions,
   warnings?: ConvertWarning[],
+  stats?: ConvertStats,
 ): string[] {
   const text = segments.join("");
-  const pieces = buildPieces(text, options, warnings);
+  const pieces = buildPieces(text, options, warnings, stats);
   const out = segments.map(() => "");
   const bounds: number[] = [];
   let acc = 0;

@@ -80,7 +80,7 @@ async function runOoxml(ctx: Word.RequestContext, scope: Scope, s: Settings, dry
     await ctx.sync();
     if (!selection.text.trim()) return { ...result, emptySelection: true };
     const r = convertXml(ox.value, DOCX, opts);
-    result.changed += r.changed;
+    result.changed += r.words;
     result.warnings.push(...r.warnings);
     if (r.changed && !dryRun) selection.insertOoxml(r.xml, Word.InsertLocation.replace);
     await ctx.sync();
@@ -95,7 +95,7 @@ async function runOoxml(ctx: Word.RequestContext, scope: Scope, s: Settings, dry
   bodies.forEach((b, k) => {
     const r = convertXml(oxs[k].value, DOCX, opts);
     if (!r.changed) return;
-    result.changed += r.changed;
+    result.changed += r.words;
     result.warnings.push(...r.warnings);
     if (!dryRun) { b.insertOoxml(r.xml, Word.InsertLocation.replace); touched.push(k); }
   });

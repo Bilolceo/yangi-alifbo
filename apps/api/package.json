@@ -1,0 +1,12 @@
+{
+  "name": "@yangi-alifbo/api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Yangi alifbo REST API (on-premise, Docker)",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/main.ts --bundle --platform=node --format=esm --target=node20 --outfile=dist/server.js --alias:@yangi-alifbo/core=../../packages/core/src/index.ts --alias:@yangi-alifbo/office=../../packages/office/src/index.ts --banner:js=\"import{createRequire}from'module';const require=createRequire(import.meta.url);\"",
+    "start": "node dist/server.js"
+  },
+  "license": "MIT"
+}

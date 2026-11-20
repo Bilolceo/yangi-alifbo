@@ -20,6 +20,11 @@ export interface ConvertWarning {
   reason: WarningReason;
 }
 
+/** Statistika: oʻzgargan soʻzlar soni. */
+export interface ConvertStats {
+  words: number;
+}
+
 export interface ConvertOptions {
   /** Manba yozuvi. `auto` — kirill va eski lotin bir vaqtda (standart). */
   from?: "auto" | "latin" | "cyrillic";
@@ -108,6 +113,7 @@ export function buildPieces(
   text: string,
   options: ConvertOptions = DEFAULT_OPTS,
   warnings?: ConvertWarning[],
+  stats?: ConvertStats,
 ): Piece[] {
   const o = resolve(options);
   const pieces: Piece[] = [];
@@ -172,7 +178,11 @@ export function buildPieces(
       }
       break;
     }
+    const before = pieces.length;
     convertWord(text, i, j, o, push, pushSame, warnings);
+    if (stats) {
+      for (let k = before; k < pieces.length; k++) if (!pieces[k].same) { stats.words++; break; }
+    }
     i = j;
   }
   return pieces;

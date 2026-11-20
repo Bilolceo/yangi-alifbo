@@ -101,7 +101,7 @@ async function main() {
         if (isOffice) {
           if (a.reverse) throw new Error("--reverse hozircha faqat matn fayllar uchun");
           const r = await convertOfficeFile(buf, a.options);
-          data = r.data; n = r.report.changed; warnings = r.report.warnings;
+          data = r.data; n = r.report.words; warnings = r.report.warnings;
         } else {
           const t = buf.toString("utf8");
           if (a.reverse) { data = toOldLatin(t); n = data === t ? 0 : 1; warnings = []; }

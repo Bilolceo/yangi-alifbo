@@ -140,7 +140,7 @@ describe("convertWithReport", () => {
       ["Washington", "foreign"],
       ["Ishoq", "exception"],
     ]);
-    expect(r.changes).toBeGreaterThan(0);
+    expect(r.changes).toBe(2);
   });
 });
 

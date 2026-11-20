@@ -8,9 +8,9 @@
     "apps/*"
   ],
   "scripts": {
-    "build": "npm run build -w packages/core -w packages/office -w packages/cli",
+    "build": "npm run build -w packages/core -w packages/office -w packages/cli -w apps/web -w apps/api -w apps/word-addin",
     "test": "vitest run",
-    "typecheck": "tsc -b packages/core packages/office packages/cli"
+    "typecheck": "tsc -p packages/core --noEmit --composite false && tsc -p packages/cli && tsc -p apps/web && tsc -p apps/api && tsc -p apps/word-addin"
   },
   "license": "MIT",
   "devDependencies": {

@@ -88,6 +88,7 @@ describe("convertOfficeFile", () => {
     expect(await out.file("docProps/core.xml")!.async("string")).toContain("<dc:title>Buyruq: öquv yili</dc:title>");
     expect(report.kind).toBe("docx");
     expect(report.changed).toBe(3);
+    expect(report.words).toBe(4);
   });
 
   it("notoʻgʻri fayl", async () => {

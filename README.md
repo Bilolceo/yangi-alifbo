@@ -18,6 +18,8 @@ Oʻzbekiston → Özbekiston   bogʻ → boğ   shahar → şahar   choy → ço
 | `packages/office` | DOCX / XLSX / PPTX — formatlashni saqlagan holda |
 | `packages/cli` | `yangi-alifbo` buyrugʻi — fayl va papkalarni ommaviy oʻgirish |
 | `apps/word-addin` | Word lentasida «Yangi alifbo» tugmasi (Office.js) |
+| `apps/web` | Veb-ilova: matn + fayl yuklash, **hammasi brauzerda** (fayl serverga yuborilmaydi) |
+| `apps/api` | REST API + Docker — davlat axborot tizimlari uchun (on-premise) |
 
 ## Tez boshlash
 
@@ -31,6 +33,42 @@ node packages/cli/dist/cli.js hujjat.docx          # → hujjat.yangi.docx
 node packages/cli/dist/cli.js papka/ -o natija/ -v  # butun papka
 echo "Oʻzbekiston" | node packages/cli/dist/cli.js -
 ```
+
+## Veb-ilova
+
+```bash
+npm run dev -w apps/web      # http://localhost:5173
+npm run build -w apps/web    # apps/web/dist — istalgan statik hostingga (nginx, GitHub Pages)
+```
+
+Matn (jonli oʻgirish, eski↔yangi), fayllar (DOCX/XLSX/PPTX/TXT/CSV…, drag & drop, ZIP),
+alifbo jadvali. Eski Windows-1251 kirill `.txt` fayllar ham avtomatik taniladi.
+
+## REST API va Docker
+
+```bash
+docker compose up -d --build                 # http://localhost:8080 — veb-ilova + API
+API_KEYS=kalit1,kalit2 docker compose up -d  # autentifikatsiya bilan
+```
+
+```bash
+curl -X POST localhost:8080/v1/convert -H 'Content-Type: application/json' \
+     -H 'Authorization: Bearer kalit1' -d '{"text":"Oʻzbekiston, Toshkent shahri"}'
+# {"text":"Özbekiston, Toşkent şahri","changes":3,"warnings":[]}
+
+curl -X POST 'localhost:8080/v1/convert/file?filename=buyruq.docx' \
+     -H 'X-API-Key: kalit1' --data-binary @buyruq.docx -o buyruq.yangi.docx
+```
+
+| Endpoint | Vazifa |
+|---|---|
+| `POST /v1/convert` | `{text}` yoki `{texts:[…]}` (maks. 1000), `direction: new\|old`, `options` |
+| `POST /v1/convert/file?filename=…` | Fayl (binary) → oʻgirilgan fayl; `X-Words-Changed` sarlavhasi |
+| `POST /v1/normalize` | Qidiruv uchun kanonik shakl |
+| `POST /v1/detect` | Yozuvni aniqlash |
+| `GET /health`, `GET /openapi.json` | Holat, OpenAPI spetsifikatsiyasi |
+
+Muhit oʻzgaruvchilari: `PORT` (8080), `API_KEYS`, `MAX_BODY_MB` (25), `MAX_BATCH` (1000), `CORS_ORIGIN`, `STATIC_DIR`.
 
 ## Kutubxona sifatida
 

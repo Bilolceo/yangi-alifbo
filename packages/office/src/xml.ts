@@ -1,4 +1,4 @@
-import { convertSegments, type ConvertOptions, type ConvertWarning } from "@yangi-alifbo/core";
+import { convertSegments, type ConvertOptions, type ConvertStats, type ConvertWarning } from "@yangi-alifbo/core";
 
 /** OOXML dialekti: qaysi teg paragraf, qaysi teg matn, qaysilari soʻz ajratuvchi. */
 export interface XmlDialect {
@@ -31,7 +31,10 @@ interface Replacement { start: number; end: number; text: string }
 
 export interface XmlResult {
   xml: string;
+  /** Oʻzgargan matn tugunlari soni. */
   changed: number;
+  /** Oʻzgargan soʻzlar soni. */
+  words: number;
   warnings: ConvertWarning[];
 }
 
@@ -58,13 +61,14 @@ export function convertXml(xml: string, dialect: XmlDialect, options?: ConvertOp
   const reps: Replacement[] = [];
   const warnings: ConvertWarning[] = [];
   let changed = 0;
+  const stats: ConvertStats = { words: 0 };
 
   const flush = (items: Item[]) => {
     const segs = items.map((it) =>
       it.kind === "sep" ? "\n" : decodeXml(xml.slice(it.openEnd, it.contentEnd)),
     );
     if (!segs.some((s) => s.length > 1 || /\p{L}/u.test(s))) return;
-    const out = convertSegments(segs, options, warnings);
+    const out = convertSegments(segs, options, warnings, stats);
     items.forEach((it, k) => {
       if (it.kind !== "text" || out[k] === segs[k]) return;
       changed++;
@@ -113,7 +117,7 @@ export function convertXml(xml: string, dialect: XmlDialect, options?: ConvertOp
     if (seps.has(name) && !closing) top?.push({ kind: "sep" });
   }
 
-  if (reps.length === 0) return { xml, changed: 0, warnings };
+  if (reps.length === 0) return { xml, changed: 0, words: stats.words, warnings };
   reps.sort((a, b) => a.start - b.start);
   let out = "";
   let pos = 0;
@@ -122,5 +126,5 @@ export function convertXml(xml: string, dialect: XmlDialect, options?: ConvertOp
     pos = r.end;
   }
   out += xml.slice(pos);
-  return { xml: out, changed, warnings };
+  return { xml: out, changed, words: stats.words, warnings };
 }

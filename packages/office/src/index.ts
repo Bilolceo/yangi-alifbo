@@ -10,7 +10,9 @@ export interface OfficeReport {
   kind: OfficeKind;
   /** Oʻzgargan matn tugunlari soni. */
   changed: number;
-  parts: { path: string; changed: number }[];
+  /** Oʻzgargan soʻzlar soni. */
+  words: number;
+  parts: { path: string; changed: number; words: number }[];
   warnings: (ConvertWarning & { part: string })[];
 }
 
@@ -51,7 +53,7 @@ export async function convertOfficeFile(
   const kind = detectKind(zip);
   if (!kind) throw new Error("Qoʻllab-quvvatlanmaydigan fayl: DOCX, XLSX yoki PPTX kutilgan");
 
-  const report: OfficeReport = { kind, changed: 0, parts: [], warnings: [] };
+  const report: OfficeReport = { kind, changed: 0, words: 0, parts: [], warnings: [] };
   const rules = PART_RULES[kind];
   for (const path of Object.keys(zip.files).sort()) {
     const rule = rules.find(([re]) => re.test(path));
@@ -60,7 +62,8 @@ export async function convertOfficeFile(
     const r = convertXml(xml, rule[1], options);
     if (r.changed > 0) zip.file(path, r.xml);
     report.changed += r.changed;
-    report.parts.push({ path, changed: r.changed });
+    report.words += r.words;
+    report.parts.push({ path, changed: r.changed, words: r.words });
     for (const w of r.warnings) report.warnings.push({ ...w, part: path });
   }
 

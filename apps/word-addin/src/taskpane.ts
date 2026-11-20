@@ -68,7 +68,7 @@ async function run(scope: Scope, dryRun = false) {
     const r = await convertInWord(scope, settings, dryRun);
     if (r.emptySelection) setStatus("Avval matnni belgilang.", "err");
     else if (r.changed === 0) setStatus("Hujjat allaqaçon yangi alifboda — özgariş yöq.", "ok");
-    else setStatus(dryRun ? `${r.changed} ta joy öğirilişi kerak.` : `Tayyor: ${r.changed} ta joy öğirildi.`, "ok");
+    else setStatus(dryRun ? `${r.changed} ta söz öğirilişi kerak.` : `Tayyor: ${r.changed} ta söz öğirildi.`, "ok");
     showWarnings(r.warnings);
   } catch (e) {
     console.error(e);
