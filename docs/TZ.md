@@ -113,7 +113,7 @@ Har bir konvertatsiya ixtiyoriy ravishda hisobot qaytaradi: oʻgirilgan soʻzlar
 | M5 | Web ilova | Matn kiritish / fayl yuklash → yuklab olish, **toʻliq brauzerda** (serverga yuborilmaydi) | 2 |
 | M6 | REST API | `POST /v1/convert`, `POST /v1/convert/file` — davlat axborot tizimlari uchun, on-premise oʻrnatish (Docker) | 2 |
 | M7 | Python paket | `pip install yangi-alifbo` — bazalar migratsiyasi, Django/1C integratsiya | 2 |
-| M8 | Brauzer kengaytmasi | Sahifadagi / input'dagi matnni oʻgirish (Chrome, Edge, Firefox) | 3 |
+| M8 | Brauzer kengaytmasi | Sahifadagi / input'dagi matnni oʻgirish (Chrome, Edge, Firefox) | 3 ✅ (Chromium) |
 | M9 | Telegram bot | Matn va fayllarni oʻgirish | 3 |
 | M10 | Klaviatura sxemalari | Windows / macOS / Linux uchun Ö Ğ Ş Ç tugmalari | 3 |
 

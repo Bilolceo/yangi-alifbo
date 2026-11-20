@@ -1,0 +1,20 @@
+{
+  "name": "@yangi-alifbo/extension",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Brauzer kengaytmasi: istalgan saytda matnni yangi o'zbek alifbosiga o'girish",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "zip": "node scripts/build.mjs --zip",
+    "dev": "node scripts/build.mjs --watch"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "jszip": "^3.10.2"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.3.7",
+    "happy-dom": "^21.0.4"
+  }
+}

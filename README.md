@@ -26,6 +26,7 @@ Oʻzbekiston → Özbekiston   bogʻ → boğ   shahar → şahar   choy → ço
 | `apps/word-addin` | Word lentasida «Yangi alifbo» tugmasi (Office.js) |
 | `apps/web` | Veb-ilova: matn + fayl yuklash, **hammasi brauzerda** (fayl serverga yuborilmaydi) |
 | `apps/api` | REST API + Docker — davlat axborot tizimlari uchun (on-premise) |
+| `apps/extension` | Brauzer kengaytmasi (Chrome, Edge, Opera, Brave, Yandex) — istalgan saytda |
 
 ## Tez boshlash
 
@@ -49,6 +50,21 @@ npm run build -w apps/web    # apps/web/dist — istalgan statik hostingga (ngin
 
 Matn (jonli oʻgirish, eski↔yangi), fayllar (DOCX/XLSX/PPTX/TXT/CSV…, drag & drop, ZIP),
 alifbo jadvali. Eski Windows-1251 kirill `.txt` fayllar ham avtomatik taniladi.
+
+## Brauzer kengaytmasi
+
+- Matnni belgilang → oʻng tugma → **Yangi alifboga öğiriş** (Gmail, Telegram Web, formalar, istalgan sayt)
+- `Ctrl+Shift+Y` (macOS: `⌘⇧Y`) — belgilangan matn yoki input/textarea
+- Oʻng tugma → **Sahifani yangi alifboda körsatiş**
+- Popup: tezkor konvertor. Internetsiz ishlaydi, hech narsa yuborilmaydi.
+
+```bash
+npm run build -w apps/extension    # → apps/extension/dist
+npm run zip -w apps/extension      # → Chrome Web Store uchun .zip
+```
+
+Oʻrnatish (sinov): `chrome://extensions` → *Developer mode* → **Load unpacked** → `apps/extension/dist`.
+Web Store'ga chiqarish: [docs/CHROME-STORE.md](docs/CHROME-STORE.md).
 
 ## REST API va Docker
 

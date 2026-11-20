@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <title>Yangi alifbo</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <span class="logo" aria-hidden="true">Ö</span>
+    <div>
+      <strong>Yangi alifbo</strong>
+      <small>OʻRQ-1184 · 2026</small>
+    </div>
+  </header>
+
+  <section class="page-actions">
+    <button id="btn-sel" class="primary">Belgilanganni öğiriş</button>
+    <button id="btn-page" class="secondary">Sahifani öğiriş</button>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+  </section>
+
+  <section>
+    <label for="in">Matn</label>
+    <textarea id="in" rows="4" spellcheck="false" placeholder="Oʻzbekiston, Тошкент… şu yerga yozing yoki qöying"></textarea>
+    <div class="out-head">
+      <label for="out">Yangi alifbo</label>
+      <button id="btn-copy" class="link">Nusxalaş</button>
+    </div>
+    <textarea id="out" rows="4" readonly spellcheck="false"></textarea>
+  </section>
+
+  <details>
+    <summary>Sozlamalar</summary>
+    <label for="opt-from">Manba yozuvi</label>
+    <select id="opt-from">
+      <option value="auto">Avtomatik (eski lotin + kirill)</option>
+      <option value="latin">Faqat eski lotin</option>
+      <option value="cyrillic">Faqat kirill</option>
+    </select>
+    <label class="check"><input type="checkbox" id="opt-foreign"> Çet sözlarni himoyalaş</label>
+    <label for="opt-protected">Öğirilmaydigan sözlar (vergul bilan)</label>
+    <input id="opt-protected" type="text" placeholder="Shohruh, Chilonzor City">
+  </details>
+
+  <footer>
+    <span>Qisqa tugma: <kbd id="kbd">Ctrl+Shift+Y</kbd></span>
+    <a href="https://bilolceo.github.io/yangi-alifbo/" target="_blank" rel="noopener">Sayt</a>
+  </footer>
+  <script src="popup.js"></script>
+</body>
+</html>

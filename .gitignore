@@ -5,3 +5,4 @@ dist/
 *.yangi.*
 .playwright-mcp/
 site/
+apps/extension/*.zip

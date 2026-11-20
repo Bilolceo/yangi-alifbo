@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true, "composite": false, "declaration": false, "rootDir": "../..",
+    "types": ["chrome"],
+    "paths": { "@yangi-alifbo/core": ["../../packages/core/src/index.ts"] }
+  },
+  "include": ["src"]
+}
