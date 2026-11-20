@@ -275,7 +275,10 @@ const onSettings = () => {
 [fromSel, foreign, tutuq].forEach((el) => el.addEventListener("change", onSettings));
 prot.addEventListener("input", onSettings);
 
+$("foot-word").addEventListener("click", () => showTab("alphabet"));
+if (location.hash === "#word") showTab("alphabet");
+
 // ---------- Boshlash ----------
 input.value = prefs.input;
 renderText();
-showTab(["text", "files", "alphabet"].includes(prefs.tab) ? prefs.tab : "text");
+if (location.hash !== "#word") showTab(["text", "files", "alphabet"].includes(prefs.tab) ? prefs.tab : "text");

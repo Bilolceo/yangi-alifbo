@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+  addin-manifest:
+    name: Word Add-in manifest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/build-site.mjs
+        env:
+          SITE_URL: https://example.com/yangi-alifbo
+      - run: npx -y office-addin-manifest validate site/addin/manifest.xml
+
+  docker:
+    name: Docker build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          load: true
+          tags: yangi-alifbo:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Smoke test
+        run: |
+          docker run -d --name ya -p 8080:8080 -e API_KEYS=ci yangi-alifbo:ci
+          for _ in $(seq 1 20); do curl -fs localhost:8080/health && break; sleep 1; done
+          out=$(curl -fs -X POST localhost:8080/v1/convert -H 'X-API-Key: ci' -H 'Content-Type: application/json' -d '{"text":"Toshkent shahri"}')
+          echo "$out"
+          echo "$out" | grep -q 'Toşkent şahri'
+          curl -fs -o /dev/null localhost:8080/
+          docker rm -f ya

@@ -9,6 +9,7 @@ Oʻzbekiston → Özbekiston   bogʻ → boğ   shahar → şahar   choy → ço
 
 - 📄 [Texnik topshiriq (TZ)](docs/TZ.md)
 - 🏗 [Arxitektura](docs/ARCHITECTURE.md)
+- 🚀 [Joylashtirish (deploy)](docs/DEPLOY.md)
 
 ## Tarkibi
 

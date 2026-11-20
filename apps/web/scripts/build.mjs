@@ -1,11 +1,12 @@
 import * as esbuild from "esbuild";
-import { cp, mkdir } from "node:fs/promises";
+import { cp, mkdir, rm } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const serve = process.argv.includes("--serve");
 const out = root + "dist";
 
+if (!serve) await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
 await cp(root + "public", out, { recursive: true });
 

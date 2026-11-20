@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - name: Assets
+        run: |
+          mkdir -p release
+          cp packages/cli/dist/cli.js release/yangi-alifbo-cli.mjs
+          SITE_URL="${{ vars.SITE_URL }}" node scripts/build-site.mjs
+          cp site/addin/manifest.xml release/word-addin-manifest.xml
+          (cd site && zip -qr ../release/yangi-alifbo-site.zip .)
+      - uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: release/*

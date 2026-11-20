@@ -1,0 +1,34 @@
+# Tashkilot serveri uchun: HTTPS (Caddy, avtomatik Let's Encrypt) + Yangi alifbo
+#   1) DNS: alifbo.tashkilot.uz → server IP
+#   2) .env faylida: DOMAIN=alifbo.tashkilot.uz  API_KEYS=uzun-tasodifiy-kalit
+#   3) docker compose -f deploy/docker-compose.prod.yml up -d
+services:
+  app:
+    # GHCR image (GitHub Actions yigʻadi) yoki mahalliy build:
+    image: ${IMAGE:-ghcr.io/OWNER/yangi-alifbo:main}
+    # build:
+    #   context: ..
+    #   args:
+    #     SITE_URL: https://${DOMAIN}
+    environment:
+      API_KEYS: ${API_KEYS:?API_KEYS kerak}
+      MAX_BODY_MB: "25"
+    restart: unless-stopped
+    read_only: true
+    expose: ["8080"]
+
+  caddy:
+    image: caddy:2-alpine
+    depends_on: [app]
+    ports: ["80:80", "443:443"]
+    environment:
+      DOMAIN: ${DOMAIN:?DOMAIN kerak}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:
