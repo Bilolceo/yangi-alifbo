@@ -4,12 +4,12 @@
 
 | Metodika | Nimani koʻrsatadi | Qachon tanlanadi | Ushbu hujjatda |
 |---|---|---|---|
-| **DFD** | Jarayon, maʼlumot ombori, tashqi obʼekt, oqim | Tizim tahlilining boshlanishi | [1-boʻlim](#1-dfd--maʼlumotlar-oqimi-diagrammasi): kontekst (0-daraja) va 1-daraja |
+| **DFD** | Jarayon, saqlagich, tashqi obʼekt, oqim | Tizim tahlilining boshlanishi | [1-boʻlim](#1-dfd--maʼlumotlar-oqimi-diagrammasi): kontekst (0-daraja) va 1-daraja |
 | **IDEF0** | Funksiya: kirish, boshqaruv, chiqish, mexanizm | Katta tashkilot jarayonlari | [2-boʻlim](#2-idef0--funksional-model): A-0 va A0 |
 | **BPMN 2.0** | Jarayon bosqichlari, rollar, qarorlar | Buyurtmachi bilan kelishish | [3-boʻlim](#3-bpmn-20--biznes-jarayon): `.bpmn` + SVG |
-| **UML** | Harakat va xabarlar ketma-ketligi | Dasturchilar bilan ishlash | [4-boʻlim](#4-uml): use case, komponent, ketma-ketlik ×2, sinf, holat |
-| **Sankey** | Oqim hajmi (qalinligi), yoʻqotishlar | Hajm va yoʻqotishni koʻrsatish | [5-boʻlim](#5-sankey--oqim-hajmi): korpus boʻyicha haqiqiy raqamlar |
-| **Data lineage** | Maʼlumotning manbadan hisobotgacha yoʻli | Ombor, analitika, audit | [6-boʻlim](#6-data-lineage--maʼlumot-kelib-chiqishi): DOCX va bazani koʻchirish |
+| **UML** | Harakat va xabar ketma-ketligi | Dasturchilar bilan ishlash | [4-boʻlim](#4-uml): faoliyat (harakatlar), ketma-ketlik ×2 (xabarlar), use case, komponent, sinf, holat |
+| **Sankey** | Oqim hajmi (chiziq qalinligi) | Hajm va yoʻqotishni koʻrsatish | [5-boʻlim](#5-sankey--oqim-hajmi): korpus boʻyicha haqiqiy raqamlar |
+| **Data lineage** | Maʼlumot manbadan hisobotgacha yoʻli | Ombor, analitika, audit | [6-boʻlim](#6-data-lineage--maʼlumot-kelib-chiqishi): DOCX va bazani koʻchirish |
 
 Barcha modellar kodga mos keladi va kod oʻzgarganda shu hujjat yangilanadi.
 
@@ -25,7 +25,7 @@ Barcha modellar kodga mos keladi va kod oʻzgarganda shu hujjat yangilanadi.
 
 ## 1. DFD — maʼlumotlar oqimi diagrammasi
 
-Belgilar: **toʻrtburchak** — tashqi obʼekt, **doira** — jarayon (raqamli, Yourdon–DeMarco), **silindr** — maʼlumot ombori (D1…D3), **strelka** — maʼlumot oqimi (nomi bilan).
+DFD toʻrt elementdan iborat: **jarayon**, **saqlagich**, **tashqi obʼekt**, **oqim**. Belgilar (Yourdon–DeMarco): **toʻrtburchak** — tashqi obʼekt, **doira** — jarayon (raqamli), **silindr** — saqlagich (D1…D3), **strelka** — oqim (nomi bilan).
 
 ### 1.1. Kontekst diagrammasi (0-daraja)
 
@@ -65,9 +65,9 @@ flowchart TB
   P4(("4.0<br/>Natijani yigʻish<br/>va hisobot"))
   P5(("5.0<br/>Lugʻatlarni<br/>yuritish"))
 
-  D1[("D1 Istisnolar lugʻati<br/>(is|hoq, as|hob…)")]
-  D2[("D2 Himoyalangan soʻzlar<br/>(brendlar, chet soʻzlar)")]
-  D3[("D3 Foydalanuvchi sozlamalari<br/>(localStorage / chrome.storage)")]
+  D1[("D1 Saqlagich: istisnolar lugʻati<br/>(is|hoq, as|hob…)")]
+  D2[("D2 Saqlagich: himoyalangan soʻzlar<br/>(brendlar, chet soʻzlar)")]
+  D3[("D3 Saqlagich: sozlamalar<br/>(localStorage / chrome.storage)")]
 
   U -- "matn / DOCX, XLSX, PPTX" --> P1
   W -- "getOoxml()" --> P1
@@ -193,7 +193,38 @@ flowchart TB
   CORE --> DATA
 ```
 
-### 4.3. Ketma-ketlik: Word'da «Hujjatni öğiriş» tugmasi
+### 4.3. Faoliyat diagrammasi: hujjatni oʻgirishdagi harakatlar ketma-ketligi
+
+UML faoliyat (activity) diagrammasi harakatlar ketma-ketligini koʻrsatadi: kim, qaysi harakatni, qaysi tartibda bajaradi va qayerda tarmoqlanadi. Ustunlar (swimlane) — bajaruvchilar.
+
+```mermaid
+flowchart TB
+  subgraph L1["Ish yurituvchi"]
+    S((" ")) --> A1["Hujjatni ochish"]
+    A1 --> A2["«Hujjatni öğiriş» tugmasini bosish"]
+    A9["Hujjatni saqlash"] --> E(((" ")))
+  end
+  subgraph L2["«Yangi alifbo» tizimi"]
+    B1["Hujjat matnini oʻqish<br/>(paragraf → run'lar)"] --> B2{"Yozuv?"}
+    B2 -- "kirill" --> B3["Kirill qoidalari<br/>(ў→ö, ш→ş, е→ye…)"]
+    B2 -- "eski lotin" --> B4["Lotin qoidalari<br/>(oʻ→ö, sh→ş, tutuq)"]
+    B3 --> B5["Himoyalangan soʻzlarni<br/>oʻtkazib yuborish"]
+    B4 --> B5
+    B5 --> B6["Natijani run'larga qaytarish,<br/>hisobot tuzish"]
+    B6 --> B7{"Shubhali soʻz bormi?"}
+  end
+  subgraph L3["Masʼul tekshiruvchi"]
+    C1["Shubhali soʻzlarni koʻrib chiqish"] --> C2{"Lugʻatga qoʻshilsinmi?"}
+    C2 -- "ha" --> C3["Soʻzni lugʻatga qoʻshish"]
+  end
+  A2 --> B1
+  B7 -- "yoʻq" --> A9
+  B7 -- "ha" --> C1
+  C2 -- "yoʻq" --> A9
+  C3 -- "qayta oʻgirish" --> B1
+```
+
+### 4.4. Ketma-ketlik: Word'da «Hujjatni öğiriş» tugmasi
 
 ```mermaid
 sequenceDiagram
@@ -227,7 +258,7 @@ sequenceDiagram
   R-->>X: hujjat yangi alifboda
 ```
 
-### 4.4. Ketma-ketlik: API orqali faylni oʻgirish
+### 4.5. Ketma-ketlik: API orqali faylni oʻgirish
 
 ```mermaid
 sequenceDiagram
@@ -253,7 +284,7 @@ sequenceDiagram
   A-->>S: 200, buyruq.yangi.docx<br/>X-Words-Changed, X-Warnings
 ```
 
-### 4.5. Sinf diagrammasi (core API)
+### 4.6. Sinf diagrammasi (core API)
 
 ```mermaid
 classDiagram
@@ -305,7 +336,7 @@ classDiagram
   Office ..> Core : chaqiradi
 ```
 
-### 4.6. Holat diagrammasi: hujjatning hayot sikli
+### 4.7. Holat diagrammasi: hujjatning hayot sikli
 
 ```mermaid
 stateDiagram-v2

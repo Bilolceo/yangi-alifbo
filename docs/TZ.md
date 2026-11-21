@@ -197,9 +197,9 @@ Tizimning formal modellari [MODELLAR.md](MODELLAR.md) hujjatida keltirilgan:
 
 | Metodika | Model |
 |---|---|
-| DFD | Kontekst (0-daraja) va 1-daraja diagrammalar |
+| DFD | Kontekst (0-daraja) va 1-daraja: jarayon, saqlagich, tashqi obʼekt, oqim |
 | IDEF0 | A-0 (kontekst) va A0 (dekompozitsiya: A1–A4) |
 | BPMN 2.0 | Davlat tashkilotida hujjatni oʻtkazish jarayoni (3 ta rol, 2 ta qaror nuqtasi) — `.bpmn` XML |
-| UML | Use case, komponent, 2 ta ketma-ketlik, sinf, holat diagrammalari |
+| UML | Faoliyat (harakatlar), 2 ta ketma-ketlik (xabarlar), use case, komponent, sinf, holat |
 | Sankey | Soʻzlar va harflar oqimi (korpus boʻyicha haqiqiy raqamlar) |
 | Data lineage | DOCX: fayldan hisobotgacha; maʼlumotlar bazasini koʻchirish va audit |
