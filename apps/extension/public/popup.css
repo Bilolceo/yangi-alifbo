@@ -1,6 +1,6 @@
 :root {
   --bg: #ffffff; --fg: #16191d; --muted: #5d6672; --line: #e1e4e8; --soft: #f1f3f5;
-  --accent: #1f6feb; --accent-soft: #e8f0fe; --accent-fg: #fff; --ok: #1a7f37; --err: #cf222e;
+  --accent: #0a3d7a; --accent-soft: #e8f0fe; --accent-fg: #fff; --ok: #1a7f37; --err: #cf222e;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {

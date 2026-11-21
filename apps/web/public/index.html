@@ -3,146 +3,284 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Yangi alifbo — matn va hujjatlarni öğiriş</title>
+  <title>Yangi alifbo — matn va hujjatlarni öğiriş xizmati</title>
   <meta name="description" content="Eski lotin va kirill yozuvidagi matn va Word, Excel, PowerPoint fayllarni 2026-yilgi yangi özbek alifbosiga öğiriş. Fayllar kompyuteringizdan çiqmaydi.">
+  <meta name="theme-color" content="#0a3d7a">
   <link rel="icon" href="favicon.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="top">
-    <div class="wrap top-in">
-      <a class="brand" href="#">
+  <a class="skip" href="#main">Asosiy mazmunga öting</a>
+
+  <!-- Yuqori xizmat paneli -->
+  <div class="topbar">
+    <div class="wrap topbar-in">
+      <span class="topbar-note">
+        <span class="dot" aria-hidden="true"></span>
+        Oçiq kodli jamoat loyihasi · rasmiy davlat xizmati emas
+      </span>
+      <div class="a11y" role="group" aria-label="Maxsus imkoniyatlar">
+        <span class="a11y-label">Köriniş:</span>
+        <button id="a11y-minus" class="a11y-btn" aria-label="Matnni kiçraytiriş">A−</button>
+        <button id="a11y-plus" class="a11y-btn" aria-label="Matnni kattalaştiriş">A+</button>
+        <button id="a11y-contrast" class="a11y-btn" aria-pressed="false">
+          <span aria-hidden="true">◐</span> Közi ojizlar uçun
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bayroq ranglaridagi chiziq -->
+  <div class="stripe" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+
+  <!-- Sarlavha -->
+  <header class="masthead">
+    <div class="wrap masthead-in">
+      <a class="brand" href="#" aria-label="Yangi alifbo — boş sahifa">
         <span class="logo" aria-hidden="true">Ö</span>
-        <span>
+        <span class="brand-text">
           <strong>Yangi alifbo</strong>
-          <small>OʻRQ-1184 · 28 harf + tutuq belgisi</small>
+          <small>Matn va hujjatlarni yangi özbek alifbosiga öğiriş xizmati</small>
         </span>
       </a>
-      <nav class="tabs" role="tablist" aria-label="Bölimlar">
-        <button class="tab" role="tab" data-tab="text" aria-selected="true">Matn</button>
-        <button class="tab" role="tab" data-tab="files" aria-selected="false">Fayllar</button>
-        <button class="tab" role="tab" data-tab="alphabet" aria-selected="false">Alifbo</button>
-      </nav>
+      <div class="law-chip" title="OʻRQ-1184-son Qonun, 21.10.2026">
+        <span class="law-k">OʻRQ-1184</span>
+        <span class="law-v" id="countdown">Qonun 2027-yil 22-aprelda kuçga kiradi</span>
+      </div>
     </div>
+    <nav class="mainnav" aria-label="Bölimlar">
+      <div class="wrap mainnav-in" role="tablist">
+        <button class="tab" role="tab" data-tab="text" aria-selected="true">Matnni öğiriş</button>
+        <button class="tab" role="tab" data-tab="files" aria-selected="false">Fayllarni öğiriş</button>
+        <button class="tab" role="tab" data-tab="alphabet" aria-selected="false">Alifbo va qöllanma</button>
+      </div>
+    </nav>
   </header>
 
-  <main class="wrap">
-    <!-- MATN -->
-    <section id="tab-text" class="panel" role="tabpanel">
-      <div class="toolbar">
-        <div class="seg" role="radiogroup" aria-label="Yönaliş">
-          <button class="seg-btn active" data-dir="forward" role="radio" aria-checked="true">Eski → Yangi</button>
-          <button class="seg-btn" data-dir="reverse" role="radio" aria-checked="false">Yangi → Eski</button>
-        </div>
-        <span class="spacer"></span>
-        <button id="btn-sample" class="btn ghost">Namuna</button>
-        <button id="btn-clear" class="btn ghost">Tozalaş</button>
-      </div>
-
-      <div class="editors">
-        <div class="editor">
-          <label for="in" id="in-label">Eski lotin yoki kirill</label>
-          <textarea id="in" spellcheck="false" placeholder="Matnni şu yerga yozing yoki qöying…&#10;&#10;Masalan: Oʻzbekiston Respublikasi, Toshkent shahri yoki Ўзбекистон Республикаси"></textarea>
-        </div>
-        <div class="editor">
-          <div class="editor-head">
-            <label for="out" id="out-label">Yangi alifbo</label>
-            <button id="btn-copy" class="btn small">Nusxalaş</button>
-          </div>
-          <textarea id="out" readonly spellcheck="false" placeholder="Natija şu yerda paydo böladi"></textarea>
-        </div>
-      </div>
-
-      <div id="text-report" class="report" aria-live="polite"></div>
-    </section>
-
-    <!-- FAYLLAR -->
-    <section id="tab-files" class="panel" role="tabpanel" hidden>
-      <label id="drop" class="drop" for="file-input">
-        <input id="file-input" type="file" multiple
-               accept=".docx,.xlsx,.pptx,.txt,.md,.csv,.tsv,.json,.html,.htm,.xml,.srt">
-        <span class="drop-icon" aria-hidden="true">⇪</span>
-        <strong>Fayllarni şu yerga tortib keling yoki tanlang</strong>
-        <span class="muted">Word (.docx), Excel (.xlsx), PowerPoint (.pptx), .txt, .csv, .md, .html, .srt</span>
-      </label>
-      <p class="privacy">🔒 Fayllar internetga yuborilmaydi — hammasi şu brauzerning özida bajariladi.
-        Formatlaş, jadvallar, rasmlar va formulalar özgarmaydi.</p>
-
-      <div id="file-actions" class="toolbar" hidden>
-        <strong id="file-summary"></strong>
-        <span class="spacer"></span>
-        <button id="btn-zip" class="btn primary">Hammasini yuklab oliş (.zip)</button>
-        <button id="btn-reset" class="btn ghost">Tozalaş</button>
-      </div>
-      <ul id="file-list" class="files"></ul>
-    </section>
-
-    <!-- ALIFBO -->
-    <section id="tab-alphabet" class="panel" role="tabpanel" hidden>
-      <h2>Yangi özbek alifbosi</h2>
-      <p class="muted">2026-yil 21-oktabrdagi OʻRQ-1184-son Qonun bilan tasdiqlangan.
-        Kuçga kiriş sanasi: <strong>2027-yil 22-aprel</strong>.</p>
-      <div id="letters" class="letters"></div>
-
-      <h2>Nima özgardi</h2>
-      <table class="changes">
-        <thead><tr><th>Eski</th><th>Yangi</th><th>Misol</th></tr></thead>
-        <tbody>
-          <tr><td>Oʻ oʻ</td><td><b>Ö ö</b></td><td>oʻzbek → özbek</td></tr>
-          <tr><td>Gʻ gʻ</td><td><b>Ğ ğ</b></td><td>bogʻ → boğ</td></tr>
-          <tr><td>Sh sh</td><td><b>Ş ş</b></td><td>shahar → şahar</td></tr>
-          <tr><td>Ch ch</td><td><b>Ç ç</b></td><td>choy → çoy</td></tr>
-          <tr><td>Ng ng</td><td>özgarmaydi</td><td>tong, ming</td></tr>
-          <tr><td>ʼ tutuq</td><td>saqlanadi</td><td>maʼno, şeʼr</td></tr>
-        </tbody>
-      </table>
-
-      <h2>Klaviaturada qanday yoziladi</h2>
-      <ul class="tips">
-        <li><b>Windows / macOS:</b> «Turkish Q» klaviatura sxemasini qöşing — Ö Ğ Ş Ç alohida tugmalarda.</li>
-        <li><b>macOS:</b> <kbd>o</kbd> tugmasini bosib turing → ö; <kbd>s</kbd> → ş; <kbd>c</kbd> → ç; <kbd>g</kbd> → ğ.</li>
-        <li><b>Telefon:</b> harfni bosib turing — variantlar çiqadi.</li>
-      </ul>
-
-      <h2>Muhim</h2>
-      <ul class="tips">
-        <li>Eski alifboda berilgan hujjatlar (pasport, guvohnoma, pul, qimmatli qoğozlar) kuçini saqlaydi.</li>
-        <li>Lavhalar va belgilar yaroqsiz holga kelguniça yoki belgilangan muddatgaça işlatilişi mumkin.</li>
-        <li>Imlo qoidalari Vazirlar Mahkamasi dasturi bilan aniqlaştiriladi — dastur yangilanib boriladi.</li>
-      </ul>
-
-      <h2 id="word">Word uçun qöşimça</h2>
-      <p class="muted">Word ilovasida bitta tugma bilan butun hujjatni yangi alifboga öğiriş.</p>
-      <ol class="tips">
-        <li><a id="manifest-link" href="addin/manifest.xml" download="yangi-alifbo-manifest.xml">Manifest faylni yuklab oling</a>.</li>
-        <li>Word → <b>Qöyiş (Insert)</b> → <b>Qöşimçalar (Add-ins)</b> → <b>Upload My Add-in</b> → faylni tanlang.</li>
-        <li><b>Boş sahifa (Home)</b> lentasida «Yangi alifbo» guruhi paydo böladi: <b>Hujjatni öğiriş</b>.</li>
+  <!-- Sahifa sarlavhasi -->
+  <section class="pagehead">
+    <div class="wrap">
+      <ol class="crumbs" aria-label="Siz şu yerdasiz">
+        <li><a href="#" data-go="text">Boş sahifa</a></li>
+        <li aria-current="page" id="crumb-current">Matnni öğiriş</li>
       </ol>
-      <p class="muted">Tashkilot uçun: Microsoft 365 Admin Center → <i>Integrated apps</i> → manifestni yuklang — qöşimça barça xodimlarda avtomatik paydo böladi.</p>
+      <h1 id="page-title">Matnni yangi alifboga öğiriş</h1>
+      <p id="page-desc">Eski lotin (oʻ, gʻ, sh, ch) yoki kirill yozuvidagi matnni yozing yoki qöying — natija darhol paydo böladi.</p>
+    </div>
+  </section>
+
+  <main id="main" class="wrap">
+    <!-- Xizmatlar -->
+    <section class="services" aria-label="Xizmatlar">
+      <button class="service" data-go="text">
+        <span class="service-ico" aria-hidden="true">Aa</span>
+        <span><strong>Matnni öğiriş</strong><small>Yozing yoki qöying — natija darhol</small></span>
+      </button>
+      <button class="service" data-go="files">
+        <span class="service-ico" aria-hidden="true">DOC</span>
+        <span><strong>Hujjatni öğiriş</strong><small>Word, Excel, PowerPoint, TXT</small></span>
+      </button>
+      <a class="service" href="#word" data-go="alphabet">
+        <span class="service-ico" aria-hidden="true">W</span>
+        <span><strong>Word uçun qöşimça</strong><small>Bitta tugma bilan butun hujjat</small></span>
+      </a>
+      <a class="service" href="https://github.com/Bilolceo/yangi-alifbo#rest-api-va-docker" target="_blank" rel="noopener">
+        <span class="service-ico" aria-hidden="true">{ }</span>
+        <span><strong>Tizimlar uçun API</strong><small>EDO, 1C, saytlar integratsiyasi</small></span>
+      </a>
     </section>
 
-    <details class="settings" id="settings">
-      <summary>Sozlamalar</summary>
-      <div class="settings-grid">
-        <label>Manba yozuvi
-          <select id="opt-from">
-            <option value="auto">Avtomatik (eski lotin + kirill)</option>
-            <option value="latin">Faqat eski lotin</option>
-            <option value="cyrillic">Faqat kirill</option>
-          </select>
-        </label>
-        <label class="check"><input type="checkbox" id="opt-foreign" checked> Çet sözlarni himoyalaş (Washington, Microsoft…)</label>
-        <label class="check"><input type="checkbox" id="opt-tutuq" checked> Tutuq belgisini ʼ ga keltiriş</label>
-        <label class="wide">Öğirilmaydigan sözlar (vergul yoki yangi qator bilan)
-          <textarea id="opt-protected" rows="2" placeholder="Shohruh, Chilonzor City"></textarea>
-        </label>
+    <div class="layout">
+      <div class="content">
+        <!-- MATN -->
+        <section id="tab-text" class="panel card" role="tabpanel">
+          <div class="card-head">
+            <div class="seg" role="radiogroup" aria-label="Yönaliş">
+              <button class="seg-btn active" data-dir="forward" role="radio" aria-checked="true">Eski → Yangi</button>
+              <button class="seg-btn" data-dir="reverse" role="radio" aria-checked="false">Yangi → Eski</button>
+            </div>
+            <span class="spacer"></span>
+            <button id="btn-sample" class="btn ghost">Namuna</button>
+            <button id="btn-clear" class="btn ghost">Tozalaş</button>
+          </div>
+
+          <div class="editors">
+            <div class="editor">
+              <label for="in" id="in-label">Eski lotin yoki kirill</label>
+              <textarea id="in" spellcheck="false" placeholder="Matnni şu yerga yozing yoki qöying…&#10;&#10;Masalan: Oʻzbekiston Respublikasi, Toshkent shahri yoki Ўзбекистон Республикаси"></textarea>
+            </div>
+            <div class="editor">
+              <div class="editor-head">
+                <label for="out" id="out-label">Yangi alifbo</label>
+                <button id="btn-copy" class="btn small">Nusxalaş</button>
+              </div>
+              <textarea id="out" readonly spellcheck="false" placeholder="Natija şu yerda paydo böladi"></textarea>
+            </div>
+          </div>
+
+          <div id="text-report" class="report" aria-live="polite"></div>
+        </section>
+
+        <!-- FAYLLAR -->
+        <section id="tab-files" class="panel card" role="tabpanel" hidden>
+          <label id="drop" class="drop" for="file-input">
+            <input id="file-input" type="file" multiple
+                   accept=".docx,.xlsx,.pptx,.txt,.md,.csv,.tsv,.json,.html,.htm,.xml,.srt">
+            <span class="drop-icon" aria-hidden="true">⇪</span>
+            <strong>Fayllarni şu yerga tortib keling yoki tanlang</strong>
+            <span class="muted">Word (.docx), Excel (.xlsx), PowerPoint (.pptx), .txt, .csv, .md, .html, .srt</span>
+          </label>
+          <div class="notice">
+            <span class="notice-ico" aria-hidden="true">🔒</span>
+            <p>Fayllar internetga yuborilmaydi — hammasi şu brauzerning özida bajariladi.
+              Formatlaş, jadvallar, rasmlar va formulalar özgarmaydi.</p>
+          </div>
+
+          <div id="file-actions" class="toolbar" hidden>
+            <strong id="file-summary"></strong>
+            <span class="spacer"></span>
+            <button id="btn-zip" class="btn primary">Hammasini yuklab oliş (.zip)</button>
+            <button id="btn-reset" class="btn ghost">Tozalaş</button>
+          </div>
+          <ul id="file-list" class="files"></ul>
+        </section>
+
+        <!-- ALIFBO -->
+        <section id="tab-alphabet" class="panel" role="tabpanel" hidden>
+          <div class="card">
+            <h2>Yangi özbek alifbosi</h2>
+            <p class="muted">2026-yil 21-oktabrdagi OʻRQ-1184-son Qonun bilan tasdiqlangan.
+              Kuçga kiriş sanasi: <strong>2027-yil 22-aprel</strong>.</p>
+            <div id="letters" class="letters"></div>
+          </div>
+
+          <div class="card">
+            <h2>Nima özgardi</h2>
+            <div class="table-wrap">
+              <table class="changes">
+                <thead><tr><th>Eski</th><th>Yangi</th><th>Misol</th></tr></thead>
+                <tbody>
+                  <tr><td>Oʻ oʻ</td><td><b>Ö ö</b></td><td>oʻzbek → özbek</td></tr>
+                  <tr><td>Gʻ gʻ</td><td><b>Ğ ğ</b></td><td>bogʻ → boğ</td></tr>
+                  <tr><td>Sh sh</td><td><b>Ş ş</b></td><td>shahar → şahar</td></tr>
+                  <tr><td>Ch ch</td><td><b>Ç ç</b></td><td>choy → çoy</td></tr>
+                  <tr><td>Ng ng</td><td>özgarmaydi</td><td>tong, ming</td></tr>
+                  <tr><td>ʼ tutuq</td><td>saqlanadi</td><td>maʼno, şeʼr</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Klaviaturada qanday yoziladi</h2>
+            <ul class="tips">
+              <li><b>Windows / macOS:</b> «Turkish Q» klaviatura sxemasini qöşing — Ö Ğ Ş Ç alohida tugmalarda.</li>
+              <li><b>macOS:</b> <kbd>o</kbd> tugmasini bosib turing → ö; <kbd>s</kbd> → ş; <kbd>c</kbd> → ç; <kbd>g</kbd> → ğ.</li>
+              <li><b>Telefon:</b> harfni bosib turing — variantlar çiqadi.</li>
+            </ul>
+          </div>
+
+          <div class="card" id="word">
+            <h2>Word uçun qöşimça</h2>
+            <p class="muted">Word ilovasida bitta tugma bilan butun hujjatni yangi alifboga öğiriş.</p>
+            <ol class="steps">
+              <li><a id="manifest-link" href="addin/manifest.xml" download="yangi-alifbo-manifest.xml">Manifest faylni yuklab oling</a>.</li>
+              <li>Word → <b>Qöyiş (Insert)</b> → <b>Qöşimçalar (Add-ins)</b> → <b>Upload My Add-in</b> → faylni tanlang.</li>
+              <li><b>Boş sahifa (Home)</b> lentasida «Yangi alifbo» guruhi paydo böladi: <b>Hujjatni öğiriş</b>.</li>
+            </ol>
+            <p class="muted">Taşkilot uçun: Microsoft 365 Admin Center → <i>Integrated apps</i> → manifestni yuklang — qöşimça barça xodimlarda avtomatik paydo böladi.</p>
+          </div>
+
+          <div class="card">
+            <h2>Muhim</h2>
+            <ul class="tips">
+              <li>Eski alifboda berilgan hujjatlar (pasport, guvohnoma, pul, qimmatli qoğozlar) kuçini saqlaydi.</li>
+              <li>Lavhalar va belgilar yaroqsiz holga kelguniça yoki belgilangan muddatgaça işlatilişi mumkin.</li>
+              <li>Imlo qoidalari Vazirlar Mahkamasi dasturi bilan aniqlaştiriladi — dastur yangilanib boriladi.</li>
+            </ul>
+          </div>
+        </section>
       </div>
-    </details>
+
+      <!-- Yon panel -->
+      <aside class="side">
+        <details class="card settings" id="settings">
+          <summary>Sozlamalar</summary>
+          <div class="settings-grid">
+            <label>Manba yozuvi
+              <select id="opt-from">
+                <option value="auto">Avtomatik (eski lotin + kirill)</option>
+                <option value="latin">Faqat eski lotin</option>
+                <option value="cyrillic">Faqat kirill</option>
+              </select>
+            </label>
+            <label class="check"><input type="checkbox" id="opt-foreign" checked> Çet sözlarni himoyalaş (Washington, Microsoft…)</label>
+            <label class="check"><input type="checkbox" id="opt-tutuq" checked> Tutuq belgisini ʼ ga keltiriş</label>
+            <label>Öğirilmaydigan sözlar (vergul yoki yangi qator bilan)
+              <textarea id="opt-protected" rows="2" placeholder="Shohruh, Chilonzor City"></textarea>
+            </label>
+          </div>
+        </details>
+
+        <div class="card info">
+          <h3>Asosiy özgarişlar</h3>
+          <dl class="pairs">
+            <div><dt>Oʻ</dt><dd>Ö</dd></div>
+            <div><dt>Gʻ</dt><dd>Ğ</dd></div>
+            <div><dt>Sh</dt><dd>Ş</dd></div>
+            <div><dt>Ch</dt><dd>Ç</dd></div>
+          </dl>
+          <p class="muted small">28 harf va 1 tutuq belgisi (ʼ).</p>
+        </div>
+
+        <div class="card info">
+          <h3>Maxfiylik</h3>
+          <p class="small">Matn va fayllar serverga yuborilmaydi. <a href="privacy.html">Maxfiylik siyosati</a></p>
+        </div>
+      </aside>
+    </div>
   </main>
 
-  <footer class="wrap foot">
-    <span>Oçiq kod · MIT · <a href="#word" id="foot-word">Word uçun qöşimça</a></span>
-    <span>Natijani muhim hujjatlarda tekşirib çiqing.</span>
+  <footer class="site-foot">
+    <div class="stripe" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="wrap foot-grid">
+      <div>
+        <div class="brand foot-brand">
+          <span class="logo" aria-hidden="true">Ö</span>
+          <span class="brand-text"><strong>Yangi alifbo</strong><small>Oçiq kodli loyiha · MIT litsenziyasi</small></span>
+        </div>
+        <p class="small">Eski lotin va kirill yozuvidagi matn va hujjatlarni 2026-yilgi yangi özbek alifbosiga öğiriş vositalari.</p>
+      </div>
+      <div>
+        <h4>Xizmatlar</h4>
+        <ul>
+          <li><a href="#" data-go="text">Matnni öğiriş</a></li>
+          <li><a href="#" data-go="files">Fayllarni öğiriş</a></li>
+          <li><a href="#word" id="foot-word">Word uçun qöşimça</a></li>
+          <li><a href="https://github.com/Bilolceo/yangi-alifbo#brauzer-kengaytmasi" target="_blank" rel="noopener">Brauzer kengaytmasi</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hujjatlar</h4>
+        <ul>
+          <li><a href="https://lex.uz/uz/docs/8548754" target="_blank" rel="noopener">OʻRQ-1184 Qonuni (lex.uz)</a></li>
+          <li><a href="https://github.com/Bilolceo/yangi-alifbo/blob/main/docs/TZ.md" target="_blank" rel="noopener">Texnik topşiriq</a></li>
+          <li><a href="https://github.com/Bilolceo/yangi-alifbo/blob/main/docs/MODELLAR.md" target="_blank" rel="noopener">Tizim tahlili modellari</a></li>
+          <li><a href="privacy.html">Maxfiylik siyosati</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Aloqa</h4>
+        <ul>
+          <li><a href="https://github.com/Bilolceo/yangi-alifbo/issues" target="_blank" rel="noopener">Taklif va xatoliklar</a></li>
+          <li><a href="https://github.com/Bilolceo/yangi-alifbo" target="_blank" rel="noopener">Manba kodi (GitHub)</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap foot-bottom">
+      <span>Bu sayt davlat organiga tegişli emas. Natijani muhim hujjatlarda tekşirib çiqing.</span>
+      <span>© 2026 Yangi alifbo</span>
+    </div>
   </footer>
 
   <script type="module" src="app.js"></script>

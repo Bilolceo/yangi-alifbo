@@ -28,8 +28,75 @@ function showTab(name: string) {
   document.querySelectorAll<HTMLElement>(".panel").forEach((p) => (p.hidden = p.id !== "tab-" + name));
   $("settings").hidden = name === "alphabet";
   prefs.tab = name; save();
+  updatePageHead(name);
 }
 document.querySelectorAll<HTMLButtonElement>(".tab").forEach((t) => t.addEventListener("click", () => showTab(t.dataset.tab!)));
+
+// Sahifa sarlavhasi va «Siz shu yerdasiz» yoʻli
+const PAGES: Record<string, { crumb: string; title: string; desc: string }> = {
+  text: {
+    crumb: "Matnni öğiriş",
+    title: "Matnni yangi alifboga öğiriş",
+    desc: "Eski lotin (oʻ, gʻ, sh, ch) yoki kirill yozuvidagi matnni yozing yoki qöying — natija darhol paydo böladi.",
+  },
+  files: {
+    crumb: "Fayllarni öğiriş",
+    title: "Hujjatlarni yangi alifboga öğiriş",
+    desc: "Word, Excel, PowerPoint va matn fayllarini yuklang. Formatlaş saqlanadi, fayllar serverga yuborilmaydi.",
+  },
+  alphabet: {
+    crumb: "Alifbo va qöllanma",
+    title: "Yangi özbek alifbosi",
+    desc: "28 harf va 1 tutuq belgisi. Nima özgardi, klaviaturada qanday yoziladi va Word uçun qöşimçani örnatiş.",
+  },
+};
+function updatePageHead(name: string) {
+  const p = PAGES[name] ?? PAGES.text;
+  $("crumb-current").textContent = p.crumb;
+  $("page-title").textContent = p.title;
+  $("page-desc").textContent = p.desc;
+  document.title = `${p.crumb} — Yangi alifbo`;
+}
+
+// Xizmat kartochkalari, «Bosh sahifa» va pastki havolalar
+document.querySelectorAll<HTMLElement>("[data-go]").forEach((el) =>
+  el.addEventListener("click", (e) => {
+    const target = el.dataset.go!;
+    if (el.getAttribute("href") === "#") e.preventDefault();
+    showTab(target);
+    if (el.getAttribute("href") === "#word") setTimeout(() => $("word").scrollIntoView({ behavior: "smooth" }), 0);
+    else window.scrollTo({ top: 0, behavior: "smooth" });
+  }),
+);
+
+// ---------- Maxsus imkoniyatlar: shrift oʻlchami va yuqori kontrast ----------
+const A11Y_KEY = "yangi-alifbo.a11y";
+const a11y: { scale: number; contrast: boolean } = (() => {
+  try { return { scale: 1, contrast: false, ...JSON.parse(localStorage.getItem(A11Y_KEY) ?? "{}") }; }
+  catch { return { scale: 1, contrast: false }; }
+})();
+function applyA11y() {
+  document.documentElement.style.setProperty("--scale", String(a11y.scale));
+  if (a11y.contrast) document.documentElement.dataset.contrast = "high";
+  else delete document.documentElement.dataset.contrast;
+  $("a11y-contrast").setAttribute("aria-pressed", String(a11y.contrast));
+  try { localStorage.setItem(A11Y_KEY, JSON.stringify(a11y)); } catch { /* yoʻq */ }
+}
+$("a11y-plus").addEventListener("click", () => { a11y.scale = Math.min(1.5, +(a11y.scale + 0.125).toFixed(3)); applyA11y(); });
+$("a11y-minus").addEventListener("click", () => { a11y.scale = Math.max(0.875, +(a11y.scale - 0.125).toFixed(3)); applyA11y(); });
+$("a11y-contrast").addEventListener("click", () => { a11y.contrast = !a11y.contrast; applyA11y(); });
+applyA11y();
+
+// ---------- Qonun kuchga kirishigacha qolgan kunlar ----------
+(() => {
+  const target = Date.UTC(2027, 3, 22); // 2027-04-22
+  const now = new Date();
+  const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+  const days = Math.round((target - today) / 86400000);
+  $("countdown").textContent = days > 0
+    ? `Kuçga kiriş: 22.04.2027 · ${days} kun qoldi`
+    : "Qonun 2027-yil 22-apreldan kuçda";
+})();
 
 // ---------- Matn ----------
 const input = $<HTMLTextAreaElement>("in");
