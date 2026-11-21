@@ -1,0 +1,78 @@
+<!doctype html>
+<!--
+  Sankey diagrammalari (d3-sankey). Maʼlumot: sankey-data.json (node scripts/korpus-stats.mjs yaratadi).
+  Koʻrish: docs papkasidan HTTP server (python3 -m http.server) → /diagrams/sankey.html
+  SVG eksport: sahifadagi «SVG yuklab olish» tugmalari.
+-->
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>Sankey — Yangi alifbo</title>
+<style>
+  body { margin: 0; background: #fff; font-family: "Segoe UI", Arial, sans-serif; color: #1b1f24; }
+  .chart { padding: 16px 20px; }
+  button { margin: 0 20px 20px; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+</head>
+<body>
+<div class="chart" id="words"></div>
+<div class="chart" id="letters"></div>
+<script>
+const COLORS = {
+  "Jami soʻzlar": "#57606a", "Oʻgirildi": "#1f6feb", "Oʻgirildi (istisno)": "#8250df",
+  "Oʻzgarish shart emas": "#8c959f", "Himoyalandi": "#bf8700", "Chet soʻz": "#bf8700",
+  "Brend / lugʻat": "#bf8700", "URL / email / #": "#bf8700",
+  "Ö ö": "#1f6feb", "Ğ ğ": "#1a7f37", "Ş ş": "#cf222e", "Ç ç": "#8250df", "Tutuq ʼ": "#57606a", "s + ʼ + h": "#bf8700",
+};
+const color = (n) => COLORS[n] ?? (n.startsWith("Kirill") ? "#0969da" : n.startsWith("Eski") ? "#6e7781" : "#8c959f");
+
+function draw(el, title, subtitle, rows, width, height) {
+  const names = [...new Set(rows.flatMap((r) => [r[0], r[1]]))];
+  const graph = d3.sankey().nodeId((d) => d.name).nodeWidth(16).nodePadding(14)
+    .extent([[10, 60], [width - 10, height - 10]])({
+      nodes: names.map((name) => ({ name })),
+      links: rows.map(([source, target, value]) => ({ source, target, value })),
+    });
+  const svg = d3.select(el).append("svg")
+    .attr("xmlns", "http://www.w3.org/2000/svg")
+    .attr("viewBox", `0 0 ${width} ${height}`).attr("width", width).attr("height", height)
+    .attr("font-family", "Segoe UI, Arial, sans-serif");
+  svg.append("rect").attr("width", width).attr("height", height).attr("fill", "#fff");
+  svg.append("text").attr("x", 10).attr("y", 24).attr("font-size", 18).attr("font-weight", 700).text(title);
+  svg.append("text").attr("x", 10).attr("y", 44).attr("font-size", 12.5).attr("fill", "#57606a").text(subtitle);
+  svg.append("g").attr("fill", "none").selectAll("path").data(graph.links).join("path")
+    .attr("d", d3.sankeyLinkHorizontal())
+    .attr("stroke", (d) => color(d.target.name)).attr("stroke-opacity", 0.35)
+    .attr("stroke-width", (d) => Math.max(1, d.width))
+    .append("title").text((d) => `${d.source.name} → ${d.target.name}: ${d.value}`);
+  svg.append("g").selectAll("rect").data(graph.nodes).join("rect")
+    .attr("x", (d) => d.x0).attr("y", (d) => d.y0).attr("height", (d) => Math.max(1, d.y1 - d.y0))
+    .attr("width", (d) => d.x1 - d.x0).attr("fill", (d) => color(d.name));
+  svg.append("g").attr("font-size", 13).selectAll("text").data(graph.nodes).join("text")
+    .attr("x", (d) => (d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6))
+    .attr("y", (d) => (d.y1 + d.y0) / 2).attr("dy", "0.35em")
+    .attr("text-anchor", (d) => (d.x0 < width / 2 ? "start" : "end"))
+    .text((d) => `${d.name} — ${d.value}`);
+  const btn = document.createElement("button");
+  btn.textContent = "SVG yuklab olish";
+  btn.onclick = () => {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([el.querySelector("svg").outerHTML], { type: "image/svg+xml" }));
+    a.download = `sankey-${el.id}.svg`; a.click();
+  };
+  el.after(btn);
+}
+
+(async () => {
+  const d = await (await fetch("sankey-data.json")).json();
+  draw(document.getElementById("words"), "Sankey · Soʻzlar oqimi",
+    `Korpus: ${d.files} hujjat, ${d.words.jami} soʻz (${d.generated})`, d.wordRows, 900, 420);
+  draw(document.getElementById("letters"), "Sankey · Harflar: eski yozuv → yangi alifbo",
+    `Kirilldagi boshqa harflar (${d.otherCyrillic} ta, а→a, т→t…) koʻrsatilmagan`, d.letterRows, 900, 520);
+  window.__done = true;
+})();
+</script>
+</body>
+</html>

@@ -14,6 +14,7 @@ Oʻzbekiston → Özbekiston   bogʻ → boğ   shahar → şahar   choy → ço
 
 - 📄 [Texnik topshiriq (TZ)](docs/TZ.md)
 - 🏗 [Arxitektura](docs/ARCHITECTURE.md)
+- 📐 [Tizim tahlili modellari](docs/MODELLAR.md) — DFD, IDEF0, BPMN 2.0, UML, Sankey, Data lineage
 - 🚀 [Joylashtirish (deploy)](docs/DEPLOY.md)
 
 ## Tarkibi

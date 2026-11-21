@@ -1,0 +1,115 @@
+{
+  "generated": "2026-11-21",
+  "files": 3,
+  "words": {
+    "jami": 304,
+    "kirill": 65,
+    "lotin": 239,
+    "ogirildi": 147,
+    "istisno": 1,
+    "ozgarishsiz": 143,
+    "chet": 1,
+    "himoyalangan": 1,
+    "maxsus": 12
+  },
+  "wordRows": [
+    [
+      "Jami soʻzlar",
+      "Oʻgirildi",
+      146
+    ],
+    [
+      "Jami soʻzlar",
+      "Oʻgirildi (istisno)",
+      1
+    ],
+    [
+      "Jami soʻzlar",
+      "Oʻzgarish shart emas",
+      143
+    ],
+    [
+      "Jami soʻzlar",
+      "Himoyalandi",
+      14
+    ],
+    [
+      "Himoyalandi",
+      "Chet soʻz",
+      1
+    ],
+    [
+      "Himoyalandi",
+      "Brend / lugʻat",
+      1
+    ],
+    [
+      "Himoyalandi",
+      "URL / email / #",
+      12
+    ]
+  ],
+  "letterRows": [
+    [
+      "Eski sh",
+      "Ş ş",
+      42
+    ],
+    [
+      "Eski oʻ",
+      "Ö ö",
+      29
+    ],
+    [
+      "Eski ch",
+      "Ç ç",
+      21
+    ],
+    [
+      "Kirill ш",
+      "Ş ş",
+      12
+    ],
+    [
+      "Kirill ч",
+      "Ç ç",
+      8
+    ],
+    [
+      "Kirill ў",
+      "Ö ö",
+      7
+    ],
+    [
+      "Apostrof variantlari",
+      "Tutuq ʼ",
+      6
+    ],
+    [
+      "Eski gʻ",
+      "Ğ ğ",
+      5
+    ],
+    [
+      "Kirill ъ",
+      "Tutuq ʼ",
+      3
+    ],
+    [
+      "Kirill ғ",
+      "Ğ ğ",
+      1
+    ],
+    [
+      "Kirill сҳ",
+      "s + ʼ + h",
+      1
+    ],
+    [
+      "Eski sh (istisno)",
+      "s + ʼ + h",
+      1
+    ]
+  ],
+  "otherCyrillic": 407
+}

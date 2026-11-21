@@ -191,3 +191,15 @@ Har bir konvertatsiya ixtiyoriy ravishda hisobot qaytaradi: oʻgirilgan soʻzlar
 - **Shrift.** Baʼzi eski korporativ shriftlarda `Ğ ğ Ş ş Ç ç` boʻlmasligi mumkin → add-in shriftni tekshirib, ogohlantiradi.
 - **Shaxs ismlari.** Pasportdagi ism eski yozuvda qoladi (Qonun 2-modda). Hujjatlarda ismlarni oʻgirmaslik sozlamasi kerak boʻlishi mumkin (himoyalangan soʻzlar roʻyxati orqali).
 - **Chet soʻzlar.** Evristika 100 % emas — hisobot va qoʻlda tasdiqlash orqali yopiladi.
+
+## 9. Tizim tahlili modellari
+Tizimning formal modellari [MODELLAR.md](MODELLAR.md) hujjatida keltirilgan:
+
+| Metodika | Model |
+|---|---|
+| DFD | Kontekst (0-daraja) va 1-daraja diagrammalar |
+| IDEF0 | A-0 (kontekst) va A0 (dekompozitsiya: A1–A4) |
+| BPMN 2.0 | Davlat tashkilotida hujjatni oʻtkazish jarayoni (3 ta rol, 2 ta qaror nuqtasi) — `.bpmn` XML |
+| UML | Use case, komponent, 2 ta ketma-ketlik, sinf, holat diagrammalari |
+| Sankey | Soʻzlar va harflar oqimi (korpus boʻyicha haqiqiy raqamlar) |
+| Data lineage | DOCX: fayldan hisobotgacha; maʼlumotlar bazasini koʻchirish va audit |
